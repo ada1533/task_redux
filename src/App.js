@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import ContactForm from './components/ContactForm';
+import ContactList from './components/ContactList';
+import { useSelector } from 'react-redux';
+import EditContact from './components/EditContact';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer'
+import styles from './index.module.css'
 
-function App() {
+
+
+
+const App = () => {
+  const oneContact = useSelector(state => state.contacts.oneContact);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.body}>
+    <Header />
+      <Routes>
+        <Route path="/add" element={<ContactForm/>} />
+        <Route path="/" element={<ContactList/>} />
+        <Route path="/edit/:id" element={oneContact && <EditContact />} />
+      </Routes>
+      <Footer />
     </div>
   );
-}
+};
 
 export default App;
